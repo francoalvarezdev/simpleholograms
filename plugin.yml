@@ -1,0 +1,9 @@
+main: me.franco.sas.Main
+version: 1.0
+name: SimpleHolograms
+author: FrancoAlvarez
+commands:
+   hologram:
+      description: Create your own hologram!
+   holoremove:
+      description: Remove a hologram.
