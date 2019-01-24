@@ -1,0 +1,57 @@
+package me.franco.sas;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main
+  extends JavaPlugin
+{
+  public void onEnable()
+  {
+    Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[SimpleHolograms] Plugin enabled!");
+  }
+  
+  public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+  {
+    if (cmd.getName().equalsIgnoreCase("hologram")) {
+      if (sender.hasPermission("simpleholograms.create")){
+      
+        if (args.length > 0) {
+        
+          Player p = (Player)sender;
+          
+          ArmorStand stand = (ArmorStand)p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
+          
+          stand.setGravity(false);
+          stand.setVisible(false);
+          stand.setCustomNameVisible(true);
+          StringBuilder sb = new StringBuilder("");
+          for (int i = 0;i<args.length;i++) {
+        	  sb.append(args[i]).append(" ");
+          }
+          String s = sb.toString();
+          stand.setCustomName(ChatColor.translateAlternateColorCodes('&', s));
+          p.sendMessage(ChatColor.GREEN + "Hologram Created! " + ChatColor.translateAlternateColorCodes('&', s));
+        }
+        else {
+        
+          sender.sendMessage(ChatColor.RED + "Please usage: /hologram <text>");
+          return true;
+        }
+      }
+      else {
+      
+        sender.sendMessage(ChatColor.RED + "You don't have permission.");
+        return true;
+      }
+    }
+    return false;
+  }
+}
